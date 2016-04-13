@@ -96,4 +96,31 @@ public class Vector2D {
 
 		return (ySeparation * ySeparation) + (xSeparation * xSeparation);
 	}
+
+	/*
+	 * truncates a vector so that its length does not exceed max
+	 */
+	public void Truncate(double max) {
+		if (this.Length() > max) {
+			this.Normalize();
+		}
+	}
+
+	/*
+	 * normalizes a 2D Vector
+	 */
+	public void Normalize() {
+		double vectorLength = this.Length();
+		if (vectorLength > Double.MIN_VALUE) {
+			this.x /= vectorLength;
+			this.y /= vectorLength;
+		}
+	}
+	
+	/*
+	 * returns the vector that is the reverse of this vector
+	 */
+	public Vector2D GetReverse() {
+		return new Vector2D(-this.x, -this.y);
+	}
 }
