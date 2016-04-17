@@ -25,4 +25,13 @@ public class EntityManager {
 		
 		return instance;
 	}
+
+	/**
+	 * @return the entityMap
+	 */
+	public Map<Integer, BaseGameEntity> getEntityMap() {
+		return EntityMap;
+	}
+	
+	
 }
