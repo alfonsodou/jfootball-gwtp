@@ -93,6 +93,7 @@
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<appEngineVersion>${gae.version}</appEngineVersion>
 					<appEngineHome>${gae.home}</appEngineHome>
+					<extraJvmArgs>-Xss2048k -Xmx1024M</extraJvmArgs>
 				</configuration>
 				<executions>
 					<execution>
@@ -103,6 +104,19 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Google App Engine API -->
+			<plugin>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-api-1.0-sdk</artifactId>
+				<version>${gae.version}</version>
+				<configuration>
+					<enableJarSplitting>true</enableJarSplitting>
+					<fullScanSeconds>1</fullScanSeconds>
+					<version>1</version>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -121,13 +135,6 @@
 			<artifactId>gwtp-mvp-client</artifactId>
 			<version>${gwtp.version}</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- Google App Engine API -->
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>${gae.version}</version>
 		</dependency>
 
 		<!-- DI -->
