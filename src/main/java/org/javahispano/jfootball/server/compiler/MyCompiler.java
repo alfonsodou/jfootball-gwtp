@@ -8,72 +8,33 @@ package org.javahispano.jfootball.server.compiler;
  *
  */
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.jdt.internal.compiler.ClassFile;
-import org.eclipse.jdt.internal.compiler.CompilationResult;
-import org.eclipse.jdt.internal.compiler.Compiler;
-import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
-import org.eclipse.jdt.internal.compiler.ICompilerRequestor;
-import org.eclipse.jdt.internal.compiler.batch.CompilationUnit;
-import org.eclipse.jdt.internal.compiler.batch.FileSystem;
-import org.eclipse.jdt.internal.compiler.batch.FileSystem.Classpath;
-import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
-import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
-import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
-import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
-import org.eclipse.jdt.internal.compiler.util.Util;
+import org.apache.commons.jci.compilers.CompilationResult;
+import org.apache.commons.jci.compilers.EclipseJavaCompiler;
+import org.apache.commons.jci.compilers.JavaCompilerSettings;
 
 public class MyCompiler {
-	static class ByteClassLoader extends ClassLoader {
-		private Map<String, byte[]> classMap;
+	private EclipseJavaCompiler eclipseJavaCompiler;
+	private JavaCompilerSettings javaCompilerSettings;
+	private ByteClassLoader byteClassLoader;
+	private MyResourceReader resourceReader;
+	private MyResourceStore resourceStore;
+	private CompilationResult compilationResult;
 
-		public ByteClassLoader(Map<String, byte[]> classMap) {
-			super();
-			this.classMap = classMap;
-		}
-
-		protected Class<?> findClass(String name) throws ClassNotFoundException {
-			byte[] bytes = classMap.get(name);
-			if (bytes == null) {
-				return super.findClass(name);
-			} else {
-				return defineClass(name, bytes, 0, bytes.length);
-			}
-		}
+	public MyCompiler() {
+		eclipseJavaCompiler = new EclipseJavaCompiler();
+		javaCompilerSettings = eclipseJavaCompiler.createDefaultSettings();
+		byteClassLoader = new ByteClassLoader();
+		resourceReader = new MyResourceReader();
+		resourceStore = new MyResourceStore();
 	}
 
-	public static void compile(String code, String filename) {
-	        ArrayList<Classpath> cp = new ArrayList<FileSystem.Classpath>();
-	        Util.collectRunningVMBootclasspath(cp);
-	        
-	        INameEnvironment env = new FileSystem(cp., new String[] {}, null);
-	        ICompilerRequestor requestor = new ICompilerRequestor() {
-	            @Override
-	            public void acceptResult(CompilationResult result) {
-	                ClassFile[] cf = result.getClassFiles();
-	                HashMap<String, byte[]> classMap = new HashMap<String, byte[]>();
-	                classMap.put("Test", cf[0].getBytes());
-	                ByteClassLoader cl = new ByteClassLoader(classMap);
-	                try {
-	                    Class<?> c = cl.loadClass("Test");
-	                    Method m = c.getMethod("test");
-	                    m.invoke(null);
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        };
-	        Compiler compiler = new Compiler(env, DefaultErrorHandlingPolicies.exitAfterAllProblems(),
-	                new CompilerOptions(), requestor, new DefaultProblemFactory());
+	public void compile(String[] resourceFiles) {
+		compilationResult = eclipseJavaCompiler.compile(resourceFiles,
+				resourceReader, resourceStore, byteClassLoader,
+				javaCompilerSettings);
+	}
 
-	        ICompilationUnit[] units = new ICompilationUnit[] { new CompilationUnit(code.toCharArray(), filename, null) };
-	        compiler.compile(units);
-	    }
-	
 	// Ejemplo de llamada
-	//compile("public class Test { public static void test() { System.out.println(\"Hello, world.\"); }}", "Test.java");
+	// compile("public class Test { public static void test() { System.out.println(\"Hello, world.\"); }}",
+	// "Test.java");
 }
