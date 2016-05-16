@@ -5,7 +5,6 @@ package org.javahispano.jfootball.server.compiler;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
 
 import org.apache.commons.jci.readers.ResourceReader;
 
@@ -27,14 +26,13 @@ public class MyResourceReader implements ResourceReader {
 
 	@Override
 	public byte[] getBytes(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		GcsFilename filename = new GcsFilename("jfootball-", arg0);
+		return readFile(filename);
 	}
 
 	@Override
 	public boolean isAvailable(String arg0) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	private void writeToFile(GcsFilename fileName, byte[] content)
