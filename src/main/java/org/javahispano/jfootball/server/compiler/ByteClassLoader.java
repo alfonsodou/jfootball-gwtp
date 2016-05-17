@@ -21,13 +21,21 @@ class ByteClassLoader extends ClassLoader {
 		super();
 		this.classMap = classMap;
 	}
-
-	protected Class<?> findClass(String name) throws ClassNotFoundException {
-		byte[] bytes = classMap.get(name);
-		if (bytes == null) {
-			return super.findClass(name);
-		} else {
-			return defineClass(name, bytes, 0, bytes.length);
-		}
-	}
+	
+	@Override
+    protected Class<?> findClass(String name) throws ClassNotFoundException {       
+        byte[] mbc = classMap.get(name);       
+        if (mbc==null){           
+            mbc = classMap.get(name.replace(".","/"));           
+            if (mbc==null){               
+                return super.findClass(name);           
+            }       
+        }       
+        return defineClass(name, mbc, 0, mbc.length);   
+    }
+ 
+    public void addClass(String name, byte[] mbc) {       
+        classMap.put(name, mbc);   
+    }
 }
+
