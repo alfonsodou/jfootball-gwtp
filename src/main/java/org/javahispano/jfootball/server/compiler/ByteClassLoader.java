@@ -13,8 +13,8 @@ import java.util.Map;
 class ByteClassLoader extends ClassLoader {
 	private Map<String, byte[]> classMap;
 
-	public ByteClassLoader() {
-		super();
+	public ByteClassLoader(ClassLoader classLoader) {
+		super(classLoader);
 		this.classMap = new HashMap<String, byte[]>();
 	}
 	public ByteClassLoader(Map<String, byte[]> classMap) {

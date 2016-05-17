@@ -21,12 +21,11 @@ import com.google.appengine.tools.cloudstorage.RetryParams;
  *
  */
 public class MyResourceReader implements ResourceReader {
-	private final GcsService gcsService = GcsServiceFactory
-			.createGcsService(RetryParams.getDefaultInstance());
+	private final GcsService gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
 
 	@Override
 	public byte[] getBytes(String arg0) {
-		GcsFilename filename = new GcsFilename("jfootball-", arg0);
+		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com", arg0);
 		return readFile(filename);
 	}
 
@@ -35,10 +34,8 @@ public class MyResourceReader implements ResourceReader {
 		return true;
 	}
 
-	private void writeToFile(GcsFilename fileName, byte[] content)
-			throws IOException {
-		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
-				GcsFileOptions.getDefaultInstance());
+	private void writeToFile(GcsFilename fileName, byte[] content) throws IOException {
+		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}
@@ -51,8 +48,7 @@ public class MyResourceReader implements ResourceReader {
 			fileSize = (int) gcsService.getMetadata(fileName).getLength();
 			result = ByteBuffer.allocate(fileSize);
 
-			GcsInputChannel readChannel = gcsService.openReadChannel(fileName,
-					0);
+			GcsInputChannel readChannel = gcsService.openReadChannel(fileName, 0);
 			readChannel.read(result);
 
 		} catch (Exception e) {

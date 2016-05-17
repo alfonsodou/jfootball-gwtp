@@ -17,6 +17,7 @@
 		<gin.version>2.1.2</gin.version>
 		<gwt.style>OBF</gwt.style>
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
+		<gwtbootstrap.version>0.9.3</gwtbootstrap.version>
 
 		<!-- server -->
 		<gae.version>1.9.37</gae.version>
@@ -134,6 +135,17 @@
 			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
+				<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- GWTP -->
 		<dependency>
@@ -208,6 +220,20 @@
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify-gwt</artifactId>
 			<version>${objectify-gwt.version}</version>
+		</dependency>
+
+		<!-- GWTBoostrap -->
+		<dependency>
+			<groupId>org.gwtbootstrap3</groupId>
+			<artifactId>gwtbootstrap3</artifactId>
+			<version>${gwtbootstrap.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.gwtbootstrap3</groupId>
+			<artifactId>gwtbootstrap3-extras</artifactId>
+			<version>${gwtbootstrap.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Other -->
