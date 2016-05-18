@@ -461,6 +461,7 @@ public class EclipseCompiler
 	 */
 	private static final class EclipseClassLoader extends ClassLoader
 	{
+		private Map<String, byte[]> byteStreams = new HashMap<String, byte[]>();
 		/**
 		 * Create a new class loader which simply delegates to the class loader of the
 		 * current Thread context.
@@ -482,6 +483,48 @@ public class EclipseCompiler
 			//this simple class loader as defineClass(String, byte[], int, int) is protected
 			return defineClass(name, bytes, 0, bytes.length);
 		}
+		
+		@Override
+		protected Class<?> loadClass(String name, boolean resolve)
+				throws ClassNotFoundException {
+			if (name == null) {
+				throw new NullPointerException();
+			}
+
+			// Since all support classes of loaded class use same class loader
+			// must check subclass cache of classes for things like Object
+
+			// Class loaded yet?
+			Class<?> c = findLoadedClass(name);
+			if (c == null) {
+				try {
+					c = getParent().loadClass(name);
+				} catch (ClassNotFoundException ex) {
+					// Load class data from file and save in byte array
+					byte data[] = byteStreams.get(name);
+
+					if (data == null)
+						throw new ClassNotFoundException(name);
+
+					// Convert byte array to Class
+					c = defineClass(name, data, 0, data.length);
+
+					// If failed, throw exception
+					if (c == null)
+						throw new ClassNotFoundException(name);
+				}
+
+			}
+
+			// Resolve class definition if approrpriate
+			if (resolve)
+				resolveClass(c);
+
+			// Return class just created
+
+			return c;
+		}
+		
 	}
 
 	public Class compile(String name, String source) throws Exception
