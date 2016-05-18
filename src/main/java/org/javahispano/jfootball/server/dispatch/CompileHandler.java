@@ -5,8 +5,6 @@ package org.javahispano.jfootball.server.dispatch;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -18,6 +16,8 @@ import org.javahispano.jfootball.server.compiler.MyCompiler;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
 
+import com.google.appengine.api.quota.QuotaService;
+import com.google.appengine.api.quota.QuotaServiceFactory;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -69,8 +69,12 @@ public class CompileHandler extends
 					"org.javahispano.jfootball.Prueba", true,
 					compiler.getClassLoader());
 			Agent instance = clazz.newInstance();
-
-			return new CompileResult(instance.execute());
+			QuotaService qs = QuotaServiceFactory.getQuotaService();
+			long start = qs.getCpuTimeInMegaCycles();
+			String result = instance.execute();
+			long end = qs.getCpuTimeInMegaCycles();
+			return new CompileResult(result + " :: Tiempo en CPU MegaCycles = "
+					+ Long.toString(end - start));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			return new CompileResult(e1.getMessage());
