@@ -3,6 +3,7 @@
  */
 package org.javahispano.jfootball.server.compiler;
 
+import java.io.ByteArrayInputStream;
 /**
  * @author adou
  *
@@ -333,6 +334,9 @@ public class EclipseCompiler
 
 	    				//get the compiled bytes
 	    				byte[] bytes = classFile.getBytes();
+	    				
+	    				//put class on Map
+	    				_classloader.addClass(compoundName, bytes);
 
 	    				//define this class in through the classloader
 	    				_classloader.defineClass(compoundName, bytes);
@@ -484,6 +488,16 @@ public class EclipseCompiler
 			return defineClass(name, bytes, 0, bytes.length);
 		}
 		
+		public void addClass(String className, byte[] data) {
+			if (byteStreams.containsKey(className)) {
+				System.err.println("duplicate defintion of class/resource " + className
+						+ ". It will be ignored");
+			} else {
+				byteStreams.put(className, data);
+			}
+
+		}
+		
 		@Override
 		protected Class<?> loadClass(String name, boolean resolve)
 				throws ClassNotFoundException {
@@ -523,6 +537,14 @@ public class EclipseCompiler
 			// Return class just created
 
 			return c;
+		}
+		
+		@Override
+		public InputStream getResourceAsStream(String name) {
+			byte data[] = byteStreams.get(name);
+			if (data == null)
+				return null;
+			return new ByteArrayInputStream(data);
 		}
 		
 	}
