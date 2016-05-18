@@ -5,12 +5,14 @@ package org.javahispano.jfootball.server.dispatch;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
-import org.apache.commons.jci.problems.CompilationProblem;
 import org.javahispano.jfootball.server.compiler.Agent;
+import org.javahispano.jfootball.server.compiler.EclipseCompiler;
 import org.javahispano.jfootball.server.compiler.MyCompiler;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
@@ -36,7 +38,7 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 	@Inject
 	CompileHandler(Logger logger) {
 		super(CompileAction.class);
-		
+
 		this.logger = logger;
 	}
 
@@ -45,40 +47,59 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 		logger.warning(arg0.getCode());
 		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com", "Prueba.java");
 		MyCompiler myCompiler = new MyCompiler();
+		EclipseCompiler eclipseCompiler = new EclipseCompiler();
 		try {
 			writeToFile(filename, arg0.getCode().getBytes());
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			
+
 			return new CompileResult(e1.getMessage());
 		}
 
-		String[] resourceFiles = { "Prueba.java" };
-		myCompiler.compile(resourceFiles);
 		try {
+			Map<String, String> classMap = new HashMap<String, String>();
+			classMap.put("Agent", "public interface Agent {\n" + "	public String execute();\n" + "}");
+			classMap.put("Prueba", arg0.getCode());
+			eclipseCompiler.compile(classMap);
 
-			if (myCompiler.getCompilationResult().getErrors().length == 0) {
-				Class<? extends Agent> cz;
-				cz = Class.forName("org.javahispano.jfootball.Prueba", true, myCompiler.getByteClassLoader())
-						.asSubclass(Agent.class);
-				Agent a = cz.newInstance();
-				return new CompileResult(a.execute());
+			// Class agent = eclipseCompiler.compile("Agent", "public interface
+			// Agent {\n" + " public String execute();\n" + "}");
+
+			Class<? extends Agent> compiledClass = Class
+					.forName("Prueba", true, eclipseCompiler.getEclipseClassLoader()).asSubclass(Agent.class);
+
+			if (compiledClass == null) {
+				return new CompileResult("Unable to compile file");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-			return new CompileResult(e.getMessage());
-		}
-		String errors = "";
-		for (CompilationProblem cp : myCompiler.getCompilationResult().getErrors()) {
-			errors += " :: " + cp.getMessage() + " :: \n";
-		}
-		String warnings = "";
-		for (CompilationProblem cp : myCompiler.getCompilationResult().getWarnings()) {
-			warnings += " ** " + cp.getMessage() + " ** \n";
+
+			Agent a = compiledClass.newInstance();
+			return new CompileResult(a.execute());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return new CompileResult(e1.getMessage());
 		}
 
-		return new CompileResult(errors + warnings);
+		/*
+		 * String[] resourceFiles = { "Prueba.java" };
+		 * myCompiler.compile(resourceFiles); try {
+		 * 
+		 * if (myCompiler.getCompilationResult().getErrors().length == 0) {
+		 * Class<? extends Agent> cz; cz =
+		 * Class.forName("org.javahispano.jfootball.Prueba", true,
+		 * myCompiler.getByteClassLoader()) .asSubclass(Agent.class); Agent a =
+		 * cz.newInstance(); return new CompileResult(a.execute()); } } catch
+		 * (Exception e) { e.printStackTrace();
+		 * 
+		 * return new CompileResult(e.getMessage()); } String errors = ""; for
+		 * (CompilationProblem cp :
+		 * myCompiler.getCompilationResult().getErrors()) { errors += " :: " +
+		 * cp.getMessage() + " :: \n"; } String warnings = ""; for
+		 * (CompilationProblem cp :
+		 * myCompiler.getCompilationResult().getWarnings()) { warnings += " ** "
+		 * + cp.getMessage() + " ** \n"; }
+		 * 
+		 * return new CompileResult(errors + warnings);
+		 */
 	}
 
 	@Override
