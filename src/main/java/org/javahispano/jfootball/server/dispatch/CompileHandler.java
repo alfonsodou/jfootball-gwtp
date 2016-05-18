@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.codehaus.janino.SimpleCompiler;
 import org.javahispano.jfootball.server.compiler.Agent;
 import org.javahispano.jfootball.server.compiler.EclipseCompiler;
 import org.javahispano.jfootball.server.compiler.MyCompiler;
@@ -31,8 +32,10 @@ import com.gwtplatform.dispatch.shared.ActionException;
  * @author alfonso
  *
  */
-public class CompileHandler extends AbstractActionHandler<CompileAction, CompileResult> {
-	private final GcsService gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
+public class CompileHandler extends
+		AbstractActionHandler<CompileAction, CompileResult> {
+	private final GcsService gcsService = GcsServiceFactory
+			.createGcsService(RetryParams.getDefaultInstance());
 	private final Logger logger;
 
 	@Inject
@@ -43,9 +46,11 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 	}
 
 	@Override
-	public CompileResult execute(CompileAction arg0, ExecutionContext arg1) throws ActionException {
+	public CompileResult execute(CompileAction arg0, ExecutionContext arg1)
+			throws ActionException {
 		logger.warning(arg0.getCode());
-		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com", "Prueba.java");
+		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com",
+				"Prueba.java");
 		MyCompiler myCompiler = new MyCompiler();
 		EclipseCompiler eclipseCompiler = new EclipseCompiler();
 		try {
@@ -57,23 +62,15 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 		}
 
 		try {
-			Map<String, String> classMap = new HashMap<String, String>();
-			classMap.put("Agent", "public interface Agent {\n" + "	public String execute();\n" + "}");
-			classMap.put("Prueba", arg0.getCode());
-			eclipseCompiler.compile(classMap);
+			SimpleCompiler compiler = new SimpleCompiler();
+			compiler.cook(arg0.getCode());
 
-			// Class agent = eclipseCompiler.compile("Agent", "public interface
-			// Agent {\n" + " public String execute();\n" + "}");
+			Class<Agent> clazz = (Class<Agent>) Class.forName(
+					"org.javahispano.jfootball.Prueba", true,
+					compiler.getClassLoader());
+			Agent instance = clazz.newInstance();
 
-			Class<? extends Agent> compiledClass = Class
-					.forName("Prueba", true, eclipseCompiler.getEclipseClassLoader()).asSubclass(Agent.class);
-
-			if (compiledClass == null) {
-				return new CompileResult("Unable to compile file");
-			}
-
-			Agent a = compiledClass.newInstance();
-			return new CompileResult(a.execute());
+			return new CompileResult(instance.execute());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			return new CompileResult(e1.getMessage());
@@ -103,11 +100,14 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 	}
 
 	@Override
-	public void undo(CompileAction arg0, CompileResult arg1, ExecutionContext arg2) throws ActionException {
+	public void undo(CompileAction arg0, CompileResult arg1,
+			ExecutionContext arg2) throws ActionException {
 	}
 
-	private void writeToFile(GcsFilename fileName, byte[] content) throws IOException {
-		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, GcsFileOptions.getDefaultInstance());
+	private void writeToFile(GcsFilename fileName, byte[] content)
+			throws IOException {
+		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
+				GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}

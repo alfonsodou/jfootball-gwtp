@@ -14,13 +14,11 @@
 							characterWidth="80" visibleLines="25">
 							package
 							org.javahispano.jfootball; 
-							import java.lang.String;
 
-							class Prueba extends Agent {
+							class Prueba implements Agent {
 							public Prueba() {
 							}
 
-							@Override
 							public String execute() {
 							return "Hola Mundo!";
 							}
