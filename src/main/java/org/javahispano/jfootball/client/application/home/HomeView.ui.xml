@@ -12,17 +12,11 @@
 					<g:FlowPanel addStyleNames="col-lg-10">
 						<b:TextArea ui:field="formCode" b:id="formCode"
 							characterWidth="80" visibleLines="25">
-							package
-							org.javahispano.jfootball; 
+							package org.javahispano.jfootball;
 
-							class Prueba implements Agent {
-							public Prueba() {
-							}
-
-							public String execute() {
-							return "Hola Mundo!";
-							}
-							}
+							public class Prueba implements
+							org.javahispano.jfootball.server.compiler.Agent { public String
+							execute() { return "Hola Mundo!"; } }
 						</b:TextArea>
 					</g:FlowPanel>
 				</b:FormGroup>

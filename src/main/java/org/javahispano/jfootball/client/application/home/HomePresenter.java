@@ -1,6 +1,7 @@
 package org.javahispano.jfootball.client.application.home;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.TextArea;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
 import org.javahispano.jfootball.client.application.ApplicationPresenter;
 import org.javahispano.jfootball.client.place.NameTokens;
@@ -23,6 +24,8 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		Paragraph getResult();
 
 		Button getSend();
+		
+		TextArea getTextArea();
 	}
 
 	@ProxyStandard
@@ -38,6 +41,17 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		this.dispatcher = dispatcher;
 
 		getView().setUiHandlers(this);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("package org.javahispano.jfootball;");
+		builder.append("public class Prueba implements org.javahispano.jfootball.server.compiler.Agent {");
+		builder.append("    public String execute() {");
+		builder.append("        return  \"Hola Mundo!\";");
+		builder.append("    }");
+		builder.append("}");
+		builder.toString();
+		
+		getView().getTextArea().setText(builder.toString());
 	}
 
 	@Override

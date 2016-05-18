@@ -48,4 +48,9 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements Home
 	public void processCompile() {
 		getUiHandlers().compile(formCode.getText());
 	}
+
+	@Override
+	public TextArea getTextArea() {
+		return formCode;
+	}
 }
