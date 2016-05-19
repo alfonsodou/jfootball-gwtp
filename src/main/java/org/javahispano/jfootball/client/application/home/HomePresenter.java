@@ -42,22 +42,22 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		getView().setUiHandlers(this);
 		
-		String nuevalinea = System.getProperty("line.separator");
 		StringBuilder builder = new StringBuilder();
-		builder.append("package org.javahispano.jfootball;");
-		builder.append(nuevalinea);
-		builder.append(nuevalinea);
-		builder.append("public class Prueba implements org.javahispano.jfootball.server.compiler.Agent {");
-		builder.append(nuevalinea);
-		builder.append("    public String execute() {");
-		builder.append(nuevalinea);
-		builder.append("        return  \"Hola Mundo!\";");
-		builder.append(nuevalinea);
-		builder.append("    }");
-		builder.append(nuevalinea);
-		builder.append("}");
-		builder.append(nuevalinea);
-		builder.toString();
+		
+		builder.append("package org.javahispano.jfootball;\n\n");
+		builder.append("import java.util.Random;\n\n");
+		builder.append("public class B {\n");
+		builder.append("	public int aleatorio() {\n");
+		builder.append("		Random random = new Random();\n");
+		builder.append("		return random.nextInt();\n");
+		builder.append("	}\n");
+		builder.append("}\n\n");
+		builder.append("public class Prueba implements org.javahispano.jfootball.server.compiler.Agent {\n");
+		builder.append("	public String execute() {\n");
+		builder.append("		B b = new B();\n");
+		builder.append("		return  \"Hola Mundo!, el número elegido es \" + Integer.toString(b.aleatorio());\n");
+		builder.append("	}\n");
+		builder.append("}\n");
 		
 		getView().getTextArea().setText(builder.toString());
 	}

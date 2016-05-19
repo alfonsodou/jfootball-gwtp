@@ -11,8 +11,6 @@ import javax.inject.Inject;
 
 import org.codehaus.janino.SimpleCompiler;
 import org.javahispano.jfootball.server.compiler.Agent;
-import org.javahispano.jfootball.server.compiler.EclipseCompiler;
-import org.javahispano.jfootball.server.compiler.MyCompiler;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
 
@@ -32,10 +30,8 @@ import com.gwtplatform.dispatch.shared.ActionException;
  * @author alfonso
  *
  */
-public class CompileHandler extends
-		AbstractActionHandler<CompileAction, CompileResult> {
-	private final GcsService gcsService = GcsServiceFactory
-			.createGcsService(RetryParams.getDefaultInstance());
+public class CompileHandler extends AbstractActionHandler<CompileAction, CompileResult> {
+	private final GcsService gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
 	private final Logger logger;
 
 	@Inject
@@ -46,13 +42,10 @@ public class CompileHandler extends
 	}
 
 	@Override
-	public CompileResult execute(CompileAction arg0, ExecutionContext arg1)
-			throws ActionException {
+	public CompileResult execute(CompileAction arg0, ExecutionContext arg1) throws ActionException {
 		logger.warning(arg0.getCode());
-		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com",
-				"Prueba.java");
-		MyCompiler myCompiler = new MyCompiler();
-		EclipseCompiler eclipseCompiler = new EclipseCompiler();
+		GcsFilename filename = new GcsFilename("jfootball-130923.appspot.com", "Prueba.java");
+
 		try {
 			writeToFile(filename, arg0.getCode().getBytes());
 		} catch (IOException e1) {
@@ -63,55 +56,34 @@ public class CompileHandler extends
 
 		try {
 			SimpleCompiler compiler = new SimpleCompiler();
-			compiler.cook(arg0.getCode());
-
-			Class<Agent> clazz = (Class<Agent>) Class.forName(
-					"org.javahispano.jfootball.Prueba", true,
-					compiler.getClassLoader());
-			Agent instance = clazz.newInstance();
 			QuotaService qs = QuotaServiceFactory.getQuotaService();
 			long start = qs.getCpuTimeInMegaCycles();
-			String result = instance.execute();
+			compiler.cook(arg0.getCode());
 			long end = qs.getCpuTimeInMegaCycles();
-			return new CompileResult(result + " :: Tiempo en CPU MegaCycles = "
-					+ Long.toString(end - start));
+			long timeCompile = end - start;
+			Class<Agent> clazz = (Class<Agent>) Class.forName("org.javahispano.jfootball.Prueba", true,
+					compiler.getClassLoader());
+			Agent instance = clazz.newInstance();
+
+			start = qs.getCpuTimeInMegaCycles();
+			String result = instance.execute();
+			end = qs.getCpuTimeInMegaCycles();
+			return new CompileResult(
+					result + "\n\n :: Tiempo de compilación en CPU MegaCycles = " + Long.toString(timeCompile)
+							+ "\n :: Tiempo de ejecución en CPU MegaCycles = " + Long.toString(end - start));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			return new CompileResult(e1.getMessage());
 		}
 
-		/*
-		 * String[] resourceFiles = { "Prueba.java" };
-		 * myCompiler.compile(resourceFiles); try {
-		 * 
-		 * if (myCompiler.getCompilationResult().getErrors().length == 0) {
-		 * Class<? extends Agent> cz; cz =
-		 * Class.forName("org.javahispano.jfootball.Prueba", true,
-		 * myCompiler.getByteClassLoader()) .asSubclass(Agent.class); Agent a =
-		 * cz.newInstance(); return new CompileResult(a.execute()); } } catch
-		 * (Exception e) { e.printStackTrace();
-		 * 
-		 * return new CompileResult(e.getMessage()); } String errors = ""; for
-		 * (CompilationProblem cp :
-		 * myCompiler.getCompilationResult().getErrors()) { errors += " :: " +
-		 * cp.getMessage() + " :: \n"; } String warnings = ""; for
-		 * (CompilationProblem cp :
-		 * myCompiler.getCompilationResult().getWarnings()) { warnings += " ** "
-		 * + cp.getMessage() + " ** \n"; }
-		 * 
-		 * return new CompileResult(errors + warnings);
-		 */
 	}
 
 	@Override
-	public void undo(CompileAction arg0, CompileResult arg1,
-			ExecutionContext arg2) throws ActionException {
+	public void undo(CompileAction arg0, CompileResult arg1, ExecutionContext arg2) throws ActionException {
 	}
 
-	private void writeToFile(GcsFilename fileName, byte[] content)
-			throws IOException {
-		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
-				GcsFileOptions.getDefaultInstance());
+	private void writeToFile(GcsFilename fileName, byte[] content) throws IOException {
+		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}
