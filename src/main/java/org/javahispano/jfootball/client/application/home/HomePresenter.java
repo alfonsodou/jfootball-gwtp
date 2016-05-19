@@ -42,13 +42,21 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		getView().setUiHandlers(this);
 		
+		String nuevalinea = System.getProperty("line.separator");
 		StringBuilder builder = new StringBuilder();
 		builder.append("package org.javahispano.jfootball;");
+		builder.append(nuevalinea);
+		builder.append(nuevalinea);
 		builder.append("public class Prueba implements org.javahispano.jfootball.server.compiler.Agent {");
+		builder.append(nuevalinea);
 		builder.append("    public String execute() {");
+		builder.append(nuevalinea);
 		builder.append("        return  \"Hola Mundo!\";");
+		builder.append(nuevalinea);
 		builder.append("    }");
+		builder.append(nuevalinea);
 		builder.append("}");
+		builder.append(nuevalinea);
 		builder.toString();
 		
 		getView().getTextArea().setText(builder.toString());

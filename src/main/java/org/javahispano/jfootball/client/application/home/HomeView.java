@@ -42,6 +42,7 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements Home
 	@UiHandler("send")
 	void onSendClicked(ClickEvent event) {
 		result.clear();
+		result.setText("");
 		processCompile();
 	}
 
