@@ -3,7 +3,7 @@
         "http://gwtproject.org/doctype/2.7.0/gwt-module.dtd">
 <module rename-to='Jfootball'>
 	<inherits name="com.gwtplatform.dispatch.rest.DispatchRest" />
-	<inherits name="com.gwtplatform.dispatch.rest.delegates.ResourceDelegate" />	
+	<inherits name="com.gwtplatform.dispatch.rest.delegates.ResourceDelegate" />
 	<inherits name="com.gwtplatform.mvp.MvpWithEntryPoint" />
 	<inherits name="com.gwtplatform.dispatch.rpc.DispatchRpc" />
 
@@ -13,11 +13,13 @@
 	<extend-property name="locale" values="en" />
 	<!-- Spanish language, independent of country -->
 	<extend-property name="locale" values="es" />
-	<set-property-fallback name="locale" value="es"/>
+	<set-property-fallback name="locale" value="es" />
 
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
 	<inherits name="org.gwtbootstrap3.extras.notify.Notify" />
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
+	
+	<inherits name="edu.stanford.bmir.gwtcodemirror.CodeMirror"/>
 
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="org.javahispano.jfootball.client.gin.ClientModule" />
@@ -28,4 +30,5 @@
 
 	<set-configuration-property name="CssResource.enableGss"
 		value="true" />
+
 </module>

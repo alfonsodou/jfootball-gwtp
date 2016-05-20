@@ -18,6 +18,7 @@
 		<gwt.style>OBF</gwt.style>
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
 		<gwtbootstrap.version>0.9.3</gwtbootstrap.version>
+		<codemirror-gwt.version>2.0.0</codemirror-gwt.version>
 
 		<!-- server -->
 		<gae.version>1.9.37</gae.version>
@@ -248,6 +249,11 @@
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
 			<version>${janino.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stanford.protege</groupId>
+			<artifactId>codemirror-gwt</artifactId>
+			<version>${codemirror-gwt.version}</version>
 		</dependency>
 
 

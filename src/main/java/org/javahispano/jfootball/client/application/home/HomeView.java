@@ -13,6 +13,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import edu.stanford.bmir.gwtcodemirror.client.GWTCodeMirror;
+
 public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements HomePresenter.MyView {
 	@UiField
 	Paragraph result;
@@ -20,6 +22,8 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements Home
 	Button send;
 	@UiField
 	TextArea formCode;
+	@UiField
+	GWTCodeMirror editor;
 
 	interface Binder extends UiBinder<Widget, HomeView> {
 	}
@@ -54,4 +58,10 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements Home
 	public TextArea getTextArea() {
 		return formCode;
 	}
+
+	@Override
+	public GWTCodeMirror getEditor() {
+		return editor;
+	}
+
 }

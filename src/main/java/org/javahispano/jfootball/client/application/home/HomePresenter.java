@@ -8,6 +8,7 @@ import org.javahispano.jfootball.client.place.NameTokens;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -19,13 +20,17 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
+import edu.stanford.bmir.gwtcodemirror.client.GWTCodeMirror;
+
 public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy> implements HomeUiHandlers {
 	interface MyView extends View, HasUiHandlers<HomeUiHandlers> {
 		Paragraph getResult();
 
 		Button getSend();
-		
+
 		TextArea getTextArea();
+
+		GWTCodeMirror getEditor();
 	}
 
 	@ProxyStandard
@@ -41,9 +46,9 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		this.dispatcher = dispatcher;
 
 		getView().setUiHandlers(this);
-		
-		StringBuilder builder = new StringBuilder();
-		
+
+		final StringBuilder builder = new StringBuilder();
+
 		builder.append("package org.javahispano.jfootball;\n\n");
 		builder.append("import java.util.Random;\n\n");
 		builder.append("public class B {\n");
@@ -58,8 +63,19 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		builder.append("		return  \"Hola Mundo!, el número elegido es \" + Integer.toString(b.aleatorio());\n");
 		builder.append("	}\n");
 		builder.append("}\n");
-		
+
 		getView().getTextArea().setText(builder.toString());
+
+		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+			public void execute() {
+				getView().getEditor().setValue(builder.toString());
+			}
+		});
+
+	}
+
+	@Override
+	protected void onReveal() {
 	}
 
 	@Override
