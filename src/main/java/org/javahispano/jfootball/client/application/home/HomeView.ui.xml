@@ -10,18 +10,7 @@
 
 				<b:FormGroup>
 					<b:FormLabel for="formCode" addStyleNames="col-lg-2">Código</b:FormLabel>
-					<g:FlowPanel addStyleNames="col-lg-10">
-						<b:TextArea ui:field="formCode" b:id="formCode"
-							characterWidth="80" visibleLines="25">
-							package
-							org.javahispano.jfootball;
-
-							public class Prueba implements
-							org.javahispano.jfootball.server.compiler.Agent { public String
-							execute() { return "Hola Mundo!"; } }
-						</b:TextArea>
-						
-						<gwtcodemirror:GWTCodeMirror ui:field="editor"/>
+					<g:FlowPanel addStyleNames="col-lg-10" ui:field="flowPanel">
 					</g:FlowPanel>
 				</b:FormGroup>
 

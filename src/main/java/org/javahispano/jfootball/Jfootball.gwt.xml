@@ -18,8 +18,8 @@
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
 	<inherits name="org.gwtbootstrap3.extras.notify.Notify" />
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
-	
-	<inherits name="edu.stanford.bmir.gwtcodemirror.CodeMirror"/>
+
+	<inherits name="org.javahispano.jfootball.CodeMirror" />
 
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="org.javahispano.jfootball.client.gin.ClientModule" />
@@ -29,6 +29,9 @@
 	<source path='shared' />
 
 	<set-configuration-property name="CssResource.enableGss"
+		value="true" />
+
+	<set-configuration-property name="CssResource.legacy"
 		value="true" />
 
 </module>

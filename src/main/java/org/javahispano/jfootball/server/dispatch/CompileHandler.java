@@ -58,6 +58,7 @@ public class CompileHandler extends AbstractActionHandler<CompileAction, Compile
 			SimpleCompiler compiler = new SimpleCompiler();
 			QuotaService qs = QuotaServiceFactory.getQuotaService();
 			long start = qs.getCpuTimeInMegaCycles();
+			compiler.setDebuggingInformation(true, true, true);
 			compiler.cook(arg0.getCode());
 			long end = qs.getCpuTimeInMegaCycles();
 			long timeCompile = end - start;

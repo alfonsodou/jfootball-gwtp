@@ -10,5 +10,5 @@ import com.gwtplatform.mvp.client.UiHandlers;
  *
  */
 public interface HomeUiHandlers extends UiHandlers {
-	void compile(String code);
+	void compile();
 }

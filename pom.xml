@@ -19,6 +19,7 @@
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
 		<gwtbootstrap.version>0.9.3</gwtbootstrap.version>
 		<codemirror-gwt.version>2.0.0</codemirror-gwt.version>
+		<guava.version>17.0</guava.version>
 
 		<!-- server -->
 		<gae.version>1.9.37</gae.version>
@@ -251,11 +252,15 @@
 			<version>${janino.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>edu.stanford.protege</groupId>
-			<artifactId>codemirror-gwt</artifactId>
-			<version>${codemirror-gwt.version}</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-gwt</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
 
 		<!-- REST -->
 		<dependency>
