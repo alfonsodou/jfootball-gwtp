@@ -1,9 +1,9 @@
 /**
  * 
  */
-package org.javahispano.jfootball.entity;
+package org.javahispano.jfootball.framework.entity;
 
-import org.javahispano.jfootball.common.math.Vector2D;
+import org.javahispano.jfootball.framework.common.math.Vector2D;
 
 /**
  * @author alfonso

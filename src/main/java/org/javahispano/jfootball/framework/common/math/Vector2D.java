@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.javahispano.jfootball.common.math;
+package org.javahispano.jfootball.framework.common.math;
 
 /**
  * @author alfonso

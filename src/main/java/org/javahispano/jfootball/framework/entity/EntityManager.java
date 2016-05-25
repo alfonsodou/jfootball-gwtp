@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.javahispano.jfootball.entity;
+package org.javahispano.jfootball.framework.entity;
 
 import java.util.HashMap;
 import java.util.Map;
