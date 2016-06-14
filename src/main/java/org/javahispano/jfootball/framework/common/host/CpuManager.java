@@ -39,7 +39,7 @@ public class CpuManager implements ICpuManager { // NO_UCD (use default)
 	public void calculateCpuConstant() {
 		setCpuConstant();
 		logger.log(Level.INFO,
-				"Each robot will be allowed a maximum of " + cpuConstant + " nanoseconds per turn on this system.");
+				"Each team will be allowed a maximum of " + cpuConstant + " nanoseconds per turn on this system.");
 	}
 
 	private void setCpuConstant() {
