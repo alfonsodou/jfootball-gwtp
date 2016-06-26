@@ -19,10 +19,18 @@
 	<inherits name="org.gwtbootstrap3.extras.notify.Notify" />
 	<inherits name="org.gwtbootstrap3.extras.cachemanifest.Offline" />
 
+	<inherits name="org.parallax3d.parallax.platforms.parallaxGwt" />
+	<inherits name="org.parallax3d.parallax.controllers" />
+	<inherits name="org.parallax3d.parallax.loaders" />
+	<inherits name="org.parallax3d.parallax.renderer-plugins" />  
+
 	<inherits name="org.javahispano.jfootball.CodeMirror" />
 
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="org.javahispano.jfootball.client.gin.ClientModule" />
+
+	<set-configuration-property name="parallax.assetpath"
+		value="core" />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
@@ -33,5 +41,7 @@
 
 	<set-configuration-property name="CssResource.legacy"
 		value="true" />
+		
+		<set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
 
 </module>
