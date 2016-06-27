@@ -5,25 +5,16 @@ import org.gwtbootstrap3.client.ui.html.Paragraph;
 import org.javahispano.jfootball.client.application.ApplicationPresenter;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyView;
-import org.javahispano.jfootball.client.application.home.HomeView.PanelReady;
 import org.javahispano.jfootball.client.application.widget.gwtcodemirror.client.GWTCodeMirror;
+import org.javahispano.jfootball.client.application.widget.viewmatch.AnimationWidget;
 import org.javahispano.jfootball.client.application.widget.viewmatch.MyAnimation;
 import org.javahispano.jfootball.client.place.NameTokens;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
-import org.parallax3d.parallax.Animation;
-import org.parallax3d.parallax.Log;
-import org.parallax3d.parallax.Parallax;
-import org.parallax3d.parallax.Parallax.ParallaxListener;
-import org.parallax3d.parallax.platforms.gwt.GwtParallax;
-import org.parallax3d.parallax.platforms.gwt.GwtRenderingContext;
-import org.parallax3d.parallax.system.AnimationReadyListener;
 
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
@@ -35,7 +26,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class HomePresenter extends Presenter<MyView, MyProxy> implements
-		HomeUiHandlers, AnimationReadyListener, ParallaxListener {
+		HomeUiHandlers {
 
 	interface MyView extends View, HasUiHandlers<HomeUiHandlers> {
 		Paragraph getResult();
@@ -44,13 +35,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 
 		FlowPanel getFlowPanel();
 
-		SimpleLayoutPanel getRenderingPanel();
-
-		GwtRenderingContext getRendering();
-
-		void setRendering(GwtRenderingContext rendering);
-
-		PanelReady getRenderingReady();
+		AnimationWidget getAnimationWidget();
 	}
 
 	@ProxyStandard
@@ -68,8 +53,6 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 		this.dispatcher = dispatcher;
 
 		getView().setUiHandlers(this);
-		
-		GwtParallax.init( this );
 	}
 
 	@Override
@@ -79,31 +62,6 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 			public void execute() {
 				showCode();
 				showMatch();
-
-				if (getView().getRendering() == null) {
-					try {
-
-						getView().setRendering(
-								new GwtRenderingContext(getView()
-										.getRenderingPanel()));
-
-						getView().getRendering().addAnimationReadyListener(
-								HomePresenter.this);
-
-						if (getView().getRenderingReady() != null)
-							getView().getRenderingReady().onRenderingReady(
-									getView().getRendering());
-
-					} catch (Throwable e) {
-						String msg = "Sorry, your browser doesn't seem to support WebGL";
-						Log.error("setRendering: " + msg, e);
-						Window.alert(msg);
-					}
-				} else {
-					if (getView().getRenderingReady() != null)
-						getView().getRenderingReady().onRenderingReady(
-								getView().getRendering());
-				}
 			}
 		});
 	}
@@ -132,7 +90,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void showMatch() {
-
+		// getView().getRenderingPanel().add(new AnimationWidget());
 	}
 
 	@Override
@@ -159,12 +117,9 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	@Override
-	public void onAnimationReady(Animation animation) {
-		getView().getRendering().run();
-	}
-
-	@Override
-	public void onParallaxApplicationReady(Parallax instance) {
-		getView().getRendering().setAnimation(new MyAnimation());
+	public void startAnimation() {
+		getView().getAnimationWidget().getGwtRenderingContext()
+				.setAnimation(new MyAnimation());
+		getView().getAnimationWidget().getGwtRenderingContext().run();
 	}
 }
