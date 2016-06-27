@@ -292,58 +292,54 @@
 			<version>${arcbees.version}</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>thothbot.parallax</groupId> <artifactId>core</artifactId> 
-			<version>1.6</version> <scope>system</scope> <systemPath>${project.basedir}/src/main/resources/libs/parallax-1.6.jar</systemPath> 
-			</dependency> -->
+		<dependency>
+			<groupId>com.akjava.gwt</groupId>
+			<artifactId>three</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/libs/akjavathreegwt.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.akjava.gwt</groupId>
+			<artifactId>stats</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/libs/akjavastatgwt_120820.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.akjava.gwt</groupId>
+			<artifactId>html5</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.akjava.gwt</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
+		</dependency>
 
 		<!-- Parallax3d -->
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-gwt</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<classifier>sources</classifier>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-gwt</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<classifier>sources</classifier>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-controllers</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<classifier>sources</classifier>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-loaders</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<classifier>sources</classifier>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-loaders</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.parallax3d.parallax</groupId>
-			<artifactId>parallax-renderer-plugins</artifactId>
-			<version>2.0-SNAPSHOT</version>
-			<classifier>sources</classifier>
-			<scope>compile</scope>
-		</dependency>
+		<!-- <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-gwt</artifactId> 
+			<version>2.0-SNAPSHOT</version> <scope>compile</scope> </dependency> <dependency> 
+			<groupId>org.parallax3d.parallax</groupId> <artifactId>parallax</artifactId> 
+			<version>2.0-SNAPSHOT</version> <classifier>sources</classifier> <scope>compile</scope> 
+			</dependency> <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-gwt</artifactId> 
+			<version>2.0-SNAPSHOT</version> <classifier>sources</classifier> <scope>compile</scope> 
+			</dependency> <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-controllers</artifactId> 
+			<version>2.0-SNAPSHOT</version> <classifier>sources</classifier> <scope>compile</scope> 
+			</dependency> <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-loaders</artifactId> 
+			<version>2.0-SNAPSHOT</version> <classifier>sources</classifier> <scope>compile</scope> 
+			</dependency> <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-loaders</artifactId> 
+			<version>2.0-SNAPSHOT</version> <scope>compile</scope> </dependency> <dependency> 
+			<groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-renderer-plugins</artifactId> 
+			<version>2.0-SNAPSHOT</version> <classifier>sources</classifier> <scope>compile</scope> 
+			</dependency> -->
 
 		<!-- Test -->
 		<dependency>

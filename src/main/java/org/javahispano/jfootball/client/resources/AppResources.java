@@ -3,6 +3,7 @@ package org.javahispano.jfootball.client.resources;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
+import com.google.gwt.resources.client.TextResource;
 
 public interface AppResources extends ClientBundle {
     interface Normalize extends CssResource {
@@ -21,6 +22,15 @@ public interface AppResources extends ClientBundle {
     }
     
     interface ThemeEclipse extends CssResource {
+    }
+    
+    interface StatsMin extends TextResource {
+    }
+    
+    interface ThreeMin extends TextResource {
+    }
+    
+    interface ThreexCellshader extends TextResource {
     }
     
     @Source("css/normalize.gss")
@@ -44,4 +54,13 @@ public interface AppResources extends ClientBundle {
     @NotStrict
     @Source("css/codemirror/theme/eclipse/eclipse.css")
     ThemeEclipse themeEclipse();
+    
+    @Source("js/threejs/stats.min.js")
+    StatsMin statsMin();
+    
+    @Source("js/threejs/three.min.js")
+    ThreeMin threeMin();
+    
+    @Source("js/threejs/threex.cellshader.js")
+    ThreexCellshader threexCellshader();
 }

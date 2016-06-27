@@ -6,8 +6,7 @@ import org.javahispano.jfootball.client.application.ApplicationPresenter;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyView;
 import org.javahispano.jfootball.client.application.widget.gwtcodemirror.client.GWTCodeMirror;
-import org.javahispano.jfootball.client.application.widget.viewmatch.AnimationWidget;
-import org.javahispano.jfootball.client.application.widget.viewmatch.MyAnimation;
+import org.javahispano.jfootball.client.application.widget.viewmatch.MainWidget;
 import org.javahispano.jfootball.client.place.NameTokens;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
@@ -25,8 +24,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class HomePresenter extends Presenter<MyView, MyProxy> implements
-		HomeUiHandlers {
+public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiHandlers {
 
 	interface MyView extends View, HasUiHandlers<HomeUiHandlers> {
 		Paragraph getResult();
@@ -35,7 +33,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 
 		FlowPanel getFlowPanel();
 
-		AnimationWidget getAnimationWidget();
+		MainWidget getMainWidget();
 	}
 
 	@ProxyStandard
@@ -47,8 +45,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 	private GWTCodeMirror gwtCodeMirror;
 
 	@Inject
-	HomePresenter(EventBus eventBus, MyView view, MyProxy proxy,
-			DispatchAsync dispatcher) {
+	HomePresenter(EventBus eventBus, MyView view, MyProxy proxy, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 		this.dispatcher = dispatcher;
 
@@ -90,13 +87,12 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 	}
 
 	private void showMatch() {
-		// getView().getRenderingPanel().add(new AnimationWidget());
+
 	}
 
 	@Override
 	public void compile() {
-		CompileAction compileAction = new CompileAction(
-				gwtCodeMirror.getValue());
+		CompileAction compileAction = new CompileAction(gwtCodeMirror.getValue());
 		callCompileAction(compileAction);
 	}
 
@@ -118,8 +114,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements
 
 	@Override
 	public void startAnimation() {
-		getView().getAnimationWidget().getGwtRenderingContext()
-				.setAnimation(new MyAnimation());
-		getView().getAnimationWidget().getGwtRenderingContext().run();
+		getView().getMainWidget().startDemo();
 	}
+
 }

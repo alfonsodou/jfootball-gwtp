@@ -2,6 +2,8 @@ package org.javahispano.jfootball.client.resources;
 
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.ScriptInjector;
+
 public class ResourceLoader {
     @Inject
     ResourceLoader(AppResources appResources) {
@@ -11,5 +13,9 @@ public class ResourceLoader {
         appResources.showHint().ensureInjected();
         appResources.manchseterSyntax().ensureInjected();
         appResources.themeEclipse().ensureInjected();
+        
+        ScriptInjector.fromString(appResources.statsMin().getText());
+        ScriptInjector.fromString(appResources.threeMin().getText());
+        ScriptInjector.fromString(appResources.threexCellshader().getText());
     }
 }

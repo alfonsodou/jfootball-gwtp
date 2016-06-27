@@ -4,8 +4,7 @@ import javax.inject.Inject;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
-import org.javahispano.jfootball.client.application.widget.viewmatch.AnimationWidget;
-import org.parallax3d.parallax.platforms.gwt.GwtRenderingContext;
+import org.javahispano.jfootball.client.application.widget.viewmatch.MainWidget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -26,13 +25,10 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements
 	@UiField
 	Button start;
 	@UiField
-	AnimationWidget animationWidget;
+	MainWidget mainWidget;
+
 
 	interface Binder extends UiBinder<Widget, HomeView> {
-	}
-
-	public interface PanelReady {
-		void onRenderingReady(GwtRenderingContext rendering);
 	}
 	
 	@Inject
@@ -76,8 +72,9 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements
 	}
 
 	@Override
-	public AnimationWidget getAnimationWidget() {
-		return animationWidget;
+	public MainWidget getMainWidget() {
+		return mainWidget;
 	}
+
 
 }
