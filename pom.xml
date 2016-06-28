@@ -19,7 +19,7 @@
 		<objectify-gwt.version>1.2.1</objectify-gwt.version>
 		<gwtbootstrap.version>0.9.3</gwtbootstrap.version>
 		<codemirror-gwt.version>2.0.0</codemirror-gwt.version>
-		<guava.version>17.0</guava.version>
+		<guava.version>19.0</guava.version>
 		<parallax3d.version>2.0-SNAPSHOT</parallax3d.version>
 
 		<!-- server -->
@@ -256,11 +256,15 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+			<classifier>sources</classifier>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
 			<version>${guava.version}</version>
+			<classifier>sources</classifier>
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- REST -->
@@ -331,6 +335,14 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305 -->
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
 
 		<!-- Parallax3d -->
 		<!-- <dependency> <groupId>org.parallax3d.parallax</groupId> <artifactId>parallax-gwt</artifactId> 
