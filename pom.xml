@@ -301,7 +301,7 @@
 			<artifactId>three</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/libs/akjavathreegwt.jar</systemPath>
+			<systemPath>${project.basedir}/libs/akjavathreegwt.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -309,7 +309,7 @@
 			<artifactId>stats</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/libs/akjavastatgwt_120820.jar</systemPath>
+			<systemPath>${project.basedir}/libs/akjavastatgwt_120820.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -317,7 +317,7 @@
 			<artifactId>html5</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
+			<systemPath>${project.basedir}/libs/akjavalibgwt-dep.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -325,7 +325,7 @@
 			<artifactId>common</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
+			<systemPath>${project.basedir}/libs/akjavalibgwt-dep.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -333,7 +333,7 @@
 			<artifactId>common</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/libs/akjavalibgwt-dep.jar</systemPath>
+			<systemPath>${project.basedir}/libs/akjavalibgwt-dep.jar</systemPath>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305 -->
