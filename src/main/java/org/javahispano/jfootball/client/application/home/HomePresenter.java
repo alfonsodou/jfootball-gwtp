@@ -6,14 +6,17 @@ import org.javahispano.jfootball.client.application.ApplicationPresenter;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyView;
 import org.javahispano.jfootball.client.application.widget.gwtcodemirror.client.GWTCodeMirror;
-import org.javahispano.jfootball.client.application.widget.viewmatch.MainWidget;
+import org.javahispano.jfootball.client.application.widget.viewmatch.Animation;
+import org.javahispano.jfootball.client.application.widget.viewmatch.ViewMatch;
 import org.javahispano.jfootball.client.place.NameTokens;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rpc.shared.DispatchAsync;
@@ -32,8 +35,8 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 		Button getSend();
 
 		FlowPanel getFlowPanel();
-
-		MainWidget getMainWidget();
+		
+		SimplePanel getAnimationPanel();
 	}
 
 	@ProxyStandard
@@ -43,6 +46,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 
 	private final DispatchAsync dispatcher;
 	private GWTCodeMirror gwtCodeMirror;
+	private Animation animation;
 
 	@Inject
 	HomePresenter(EventBus eventBus, MyView view, MyProxy proxy, DispatchAsync dispatcher) {
@@ -87,7 +91,24 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 	}
 
 	private void showMatch() {
+		animation = new ViewMatch(createCanvas());
+		animation.getContext().makeCurrent();
+		animation.init();
+		getView().getAnimationPanel().add(animation.getCanvas());
+	}
 
+	private Canvas createCanvas() {
+		Canvas canvas = Canvas.createIfSupported();
+		canvas.setCoordinateSpaceWidth(640);
+		canvas.setCoordinateSpaceHeight(480);
+		return canvas;
+	}
+
+	private void animationCallback(double timestamp) {
+		animation.getContext().makeCurrent();
+		animation.render();
+
+		//AnimationScheduler.get().requestAnimationFrame(this.animationCallback(timestamp));
 	}
 
 	@Override
@@ -110,11 +131,6 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 			}
 
 		});
-	}
-
-	@Override
-	public void startAnimation() {
-		getView().getMainWidget().startDemo();
 	}
 
 }

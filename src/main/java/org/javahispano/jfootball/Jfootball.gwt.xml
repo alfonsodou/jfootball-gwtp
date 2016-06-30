@@ -21,13 +21,9 @@
 
 	<inherits name="org.javahispano.jfootball.CodeMirror" />
 
-	<inherits name="com.akjava.gwt.three.Three" />
-	<inherits name="com.akjava.gwt.stats.Stats" />
-	<inherits name="com.google.gwt.json.JSON" />
-	<inherits name="com.akjava.gwt.lib.Commons" />
-	<inherits name="com.akjava.gwt.html5.Html5widget" />
-
-
+	<!-- Inherit the WebGL4J library. -->
+	<inherits name="com.shc.webgl4j.client" />
+	
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="org.javahispano.jfootball.client.gin.ClientModule" />
 

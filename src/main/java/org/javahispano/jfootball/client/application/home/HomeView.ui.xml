@@ -23,6 +23,6 @@
 		<b:Lead text="Resultado de la compilación / ejecución"></b:Lead>
 		<b.html:Paragraph ui:field="result"></b.html:Paragraph>
 		<b:Button text="Comenzar" ui:field="start"></b:Button>
-		<my:MainWidget ui:field="mainWidget"></my:MainWidget>
+		<g:SimplePanel ui:field="animationPanel"></g:SimplePanel>
 	</b:Container>
 </ui:UiBinder>

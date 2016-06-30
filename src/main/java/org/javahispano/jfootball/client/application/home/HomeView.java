@@ -4,13 +4,13 @@ import javax.inject.Inject;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.html.Paragraph;
-import org.javahispano.jfootball.client.application.widget.viewmatch.MainWidget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -25,8 +25,7 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements
 	@UiField
 	Button start;
 	@UiField
-	MainWidget mainWidget;
-
+	SimplePanel animationPanel;
 
 	interface Binder extends UiBinder<Widget, HomeView> {
 	}
@@ -53,28 +52,18 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements
 		processCompile();
 	}
 	
-	@UiHandler("start")
-	void onStartClicked(ClickEvent event) {
-		processStart();
-	}
-
 	public void processCompile() {
 		getUiHandlers().compile();
 	}
 	
-	public void processStart() {
-		getUiHandlers().startAnimation();
-	}
-
 	@Override
 	public FlowPanel getFlowPanel() {
 		return flowPanel;
 	}
 
 	@Override
-	public MainWidget getMainWidget() {
-		return mainWidget;
+	public SimplePanel getAnimationPanel() {
+		return animationPanel;
 	}
-
 
 }

@@ -11,5 +11,4 @@ import com.gwtplatform.mvp.client.UiHandlers;
  */
 public interface HomeUiHandlers extends UiHandlers {
 	void compile();
-	void startAnimation();
 }
