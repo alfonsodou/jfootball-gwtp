@@ -299,14 +299,6 @@
 			<version>0.2.8</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.joml/joml -->
-		<dependency>
-			<groupId>org.joml</groupId>
-			<artifactId>joml</artifactId>
-			<version>1.8.0</version>
-			<scope>provided</scope>
-		</dependency>
-
 
 		<!-- Test -->
 		<dependency>

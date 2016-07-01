@@ -32,7 +32,7 @@ import static com.shc.webgl4j.client.WebGL10.glUniformMatrix4fv;
 import static com.shc.webgl4j.client.WebGL10.glUseProgram;
 import static com.shc.webgl4j.client.WebGL10.glVertexAttribPointer;
 
-import org.joml.Matrix4f;
+import org.javahispano.jfootball.shared.joml.Matrix4f;
 
 import com.google.gwt.canvas.client.Canvas;
 
