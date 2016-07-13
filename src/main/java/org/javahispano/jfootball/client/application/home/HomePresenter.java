@@ -6,13 +6,10 @@ import org.javahispano.jfootball.client.application.ApplicationPresenter;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyProxy;
 import org.javahispano.jfootball.client.application.home.HomePresenter.MyView;
 import org.javahispano.jfootball.client.application.widget.gwtcodemirror.client.GWTCodeMirror;
-import org.javahispano.jfootball.client.application.widget.viewmatch.Animation;
-import org.javahispano.jfootball.client.application.widget.viewmatch.ViewMatch;
 import org.javahispano.jfootball.client.place.NameTokens;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileAction;
 import org.javahispano.jfootball.shared.dispatch.compile.CompileResult;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -26,6 +23,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+
+import thothbot.parallax.core.client.RenderingPanel;
 
 public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiHandlers {
 
@@ -46,7 +45,6 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 
 	private final DispatchAsync dispatcher;
 	private GWTCodeMirror gwtCodeMirror;
-	private Animation animation;
 
 	@Inject
 	HomePresenter(EventBus eventBus, MyView view, MyProxy proxy, DispatchAsync dispatcher) {
@@ -55,7 +53,7 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 
 		getView().setUiHandlers(this);
 	}
-
+	
 	@Override
 	protected void onReveal() {
 
@@ -91,24 +89,12 @@ public class HomePresenter extends Presenter<MyView, MyProxy> implements HomeUiH
 	}
 
 	private void showMatch() {
-		animation = new ViewMatch(createCanvas());
-		animation.getContext().makeCurrent();
-		animation.init();
-		getView().getAnimationPanel().add(animation.getCanvas());
-	}
-
-	private Canvas createCanvas() {
-		Canvas canvas = Canvas.createIfSupported();
-		canvas.setCoordinateSpaceWidth(640);
-		canvas.setCoordinateSpaceHeight(480);
-		return canvas;
-	}
-
-	private void animationCallback(double timestamp) {
-		animation.getContext().makeCurrent();
-		animation.render();
-
-		//AnimationScheduler.get().requestAnimationFrame(this.animationCallback(timestamp));
+		RenderingPanel renderingPanel = new RenderingPanel();
+		// Background color
+		renderingPanel.setBackground(0x111111);
+		renderingPanel.setAnimatedScene(new MyScene());
+		
+		getView().getAnimationPanel().add(renderingPanel);
 	}
 
 	@Override

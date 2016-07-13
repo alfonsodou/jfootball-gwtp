@@ -24,15 +24,6 @@ public interface AppResources extends ClientBundle {
     interface ThemeEclipse extends CssResource {
     }
     
-    interface StatsMin extends TextResource {
-    }
-    
-    interface ThreeMin extends TextResource {
-    }
-    
-    interface ThreexCellshader extends TextResource {
-    }
-    
     @Source("css/normalize.gss")
     Normalize normalize();
 
@@ -54,13 +45,4 @@ public interface AppResources extends ClientBundle {
     @NotStrict
     @Source("css/codemirror/theme/eclipse/eclipse.css")
     ThemeEclipse themeEclipse();
-    
-    @Source("js/threejs/stats.min.js")
-    StatsMin statsMin();
-    
-    @Source("js/threejs/three.min.js")
-    ThreeMin threeMin();
-    
-    @Source("js/threejs/threex.cellshader.js")
-    ThreexCellshader threexCellshader();
 }

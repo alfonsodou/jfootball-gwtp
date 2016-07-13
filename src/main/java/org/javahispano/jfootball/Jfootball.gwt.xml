@@ -4,7 +4,7 @@
 <module rename-to='Jfootball'>
 	<inherits name="com.gwtplatform.dispatch.rest.DispatchRest" />
 	<inherits name="com.gwtplatform.dispatch.rest.delegates.ResourceDelegate" />
-	<inherits name="com.gwtplatform.mvp.Mvp" />
+	<inherits name="com.gwtplatform.mvp.MvpWithEntryPoint" />
 	<inherits name="com.gwtplatform.dispatch.rpc.DispatchRpc" />
 
 	<inherits name='com.google.gwt.user.User' />
@@ -21,8 +21,8 @@
 
 	<inherits name="org.javahispano.jfootball.CodeMirror" />
 
-	<!-- Inherit the WebGL4J library. -->
-	<inherits name="com.shc.webgl4j.client" />
+	<!-- Other module inherits -->
+	<inherits name="thothbot.parallax.core.Core" />
 	
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="org.javahispano.jfootball.client.gin.ClientModule" />
@@ -37,10 +37,13 @@
 	<set-configuration-property name="CssResource.legacy"
 		value="true" />
 
+	<set-configuration-property name="CssResource.conversionMode"
+		value="strict" />
+
 	<set-property name="gwt.logging.simpleRemoteHandler"
 		value="ENABLED" />
 
-	<entry-point
-		class="org.javahispano.jfootball.client.entrypoint.MyApplicationEntryPoint" />
+	<!-- <entry-point class="org.javahispano.jfootball.client.entrypoint.MyApplicationEntryPoint" 
+		/> -->
 
 </module>
